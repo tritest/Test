@@ -10,4 +10,4 @@ before_install:
     - ls
 
 script:
-    - rm 'C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe'
+    - cmd "C:/Users/travis/build/FreeCAD/FreeCAD/clcache.exe"
