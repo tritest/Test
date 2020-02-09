@@ -11,4 +11,4 @@ before_install:
 
 script:
     - |
-      '"C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe --help"' | cmd
+      'C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe --help' | cmd
