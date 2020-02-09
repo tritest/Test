@@ -1,0 +1,11 @@
+matrix:
+    include:
+      - os: windows
+        language: cpp
+
+
+before_install:
+    - curl -L https://github.com/frerich/clcache/releases/download/v4.2.0/clcache-4.2.0.zip --output clcache-4.2.0.zip
+    - 7z x clcache-4.2.0.zip
+    - ls
+    - cmd.exe /C 'C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe -s'
