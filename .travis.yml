@@ -10,4 +10,4 @@ before_install:
     - ls
 
 script:
-    - powershell -Start-Process -FilePath "clcache.exe -s"
+    - powershell -start-process -filepath "clcache.exe -s"
