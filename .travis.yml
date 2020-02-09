@@ -10,4 +10,5 @@ before_install:
     - ls
 
 script:
-    - cmd.exe
+    - test.bat
+    - echo "OK"
