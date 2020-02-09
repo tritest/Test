@@ -1,3 +1,1 @@
-echo "1"
-cmd.exe
-echo "2"
+cmd.exe /C 'C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe -s'
