@@ -10,5 +10,4 @@ before_install:
     - ls
 
 script:
-    - test.bat
-    - echo "OK"
+    - cmd.exe /C '"C:\Users\travis\build\FreeCAD\FreeCAD\clcache.exe --help"'
