@@ -8,4 +8,6 @@ before_install:
     - curl -L https://github.com/frerich/clcache/releases/download/v4.2.0/clcache-4.2.0.zip --output clcache-4.2.0.zip
     - 7z x clcache-4.2.0.zip
     - ls
+
+script:
     - cmd.exe
