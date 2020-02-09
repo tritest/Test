@@ -10,4 +10,4 @@ before_install:
     - ls
 
 script:
-    - rm ./clcache.exe
+    - cmd ./clcache.exe
