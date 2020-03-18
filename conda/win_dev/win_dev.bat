@@ -1,5 +1,5 @@
-set conda_env="fc_env"
-set copy_dir="FreeCAD_Conda_Build"
+set conda_env=fc_env
+set copy_dir=FreeCAD_Conda_Build
 
 mkdir %copy_dir%
 
@@ -16,7 +16,7 @@ call conda create ^
 
 
 REM Copy Conda's Python and (U)CRT to FreeCAD/bin
-robocopy %conda_env%\DLLs %copy_dir%\bin\DLLs /S /MT:%NUMBER_OF_PROCESSORS% > nul
+robocopy %conda_env%\DLLs %copy_dir%\bin\DLLs /S /MT:%NUMBER_OF_PROCESSORS%
 robocopy %conda_env%\Lib %copy_dir%\bin\Lib /XD __pycache__ /S /MT:%NUMBER_OF_PROCESSORS% > nul
 robocopy %conda_env%\Scripts %copy_dir%\bin\Scripts /S /MT:%NUMBER_OF_PROCESSORS% > nul
 robocopy %conda_env%\ python*.* %copy_dir%\bin\ /XF *.pdb /MT:%NUMBER_OF_PROCESSORS% > nul
