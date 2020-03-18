@@ -1,10 +1,72 @@
-matrix:
-    include:
-      - os: windows
-        language: cpp
+env:
+  global:
+    # tag
+    - DEPLOY_RELEASE="0.19_pre"
+    #
+    - FREECAD_RELEASE="0.18"
+    # - DEPLOY_RELEASE=${DEPLOY_RELEASE:-$FREECAD_RELEASE}
+    - OSX_PORTS_CACHE=${OSX_PORTS_CACHE:-FreeCAD/FreeCAD-ports-cache}
+    - DEPLOY_REPO=${DEPLOY_REPO:-FreeCAD/FreeCAD}
+    - DEPLOY=${DEPLOY:-0}
 
+os:
+  # - linux
+  # - osx
+  - windows
+
+compiler: gcc
+language: cpp
 
 before_install:
-    - curl -L https://github.com/frerich/clcache/releases/download/v4.2.0/clcache-4.2.0.zip --output clcache-4.2.0.zip
-    - 7z x clcache-4.2.0.zip
-    - cmd.exe //C 'C:\Users\travis\build\tritest\Test\clcache.exe -s'
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      sudo apt-get update -qq && sudo apt-get install -y desktop-file-utils jq zsync p7zip-full;
+      apt-get download libc6;
+      dpkg -x libc6*.deb libc6;
+    fi
+    # https://travis-ci.community/t/syntax-error-unexpected-keyword-rescue-expecting-keyword-end-in-homebrew/5623
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      brew update;
+      brew install jq p7zip;
+    fi
+
+install:
+  - eval "$(curl -fsSL "https://raw.githubusercontent.com/${OSX_PORTS_CACHE}/v${FREECAD_RELEASE}/travis-helpers.sh")"
+  - # Temp patch
+  - |
+    gitHub_release_named()
+    {
+       namedReleaseAsJSON=$(gitHub_releases ${1} | jq -r --arg releaseName ${2-$release} '.[] | select(.tag_name==$releaseName)')
+       echo ${namedReleaseAsJSON}
+    }
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      curl -LO https://raw.githubusercontent.com/AppImage/AppImages/master/pkg2appimage;
+      wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage";
+      chmod a+x appimagetool-x86_64.AppImage;
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda;
+      . $HOME/miniconda/etc/profile.d/conda.sh;
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda;
+      . $HOME/miniconda/etc/profile.d/conda.sh;
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
+      wget https://repo.anaconda.com/pkgs/misc/conda-execs/conda-latest-win-64.exe -O conda.exe --no-check-certificate;
+      conda.exe create -q -p C:\conda conda conda-build=3.18.10 conda-verify python=3.7;
+      call C:\conda\Scripts\activate;
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]; then
+      hash -r;
+      conda init bash;
+      conda activate base;
+    fi
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q --all
+
+script:
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
+      cd conda\win_dev;
+      win_dev.bat;
+      cd ..;
+    fi
