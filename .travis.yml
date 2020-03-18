@@ -60,9 +60,9 @@ install:
       hash -r;
       conda init bash;
       conda activate base;
+      conda config --set always_yes yes --set changeps1 no;
+      conda update -q --all;
     fi
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q --all
 
 script:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
