@@ -51,17 +51,17 @@ install:
       bash miniconda.sh -b -p $HOME/miniconda;
       . $HOME/miniconda/etc/profile.d/conda.sh;
     fi
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
-      wget https://repo.anaconda.com/pkgs/misc/conda-execs/conda-latest-win-64.exe -O conda.exe --no-check-certificate;
-      cmd.exe //C 'conda.exe create -y -q -p C:\conda conda conda-build=3.18.10 conda-verify python=3.7 -c conda-forge';
-      cmd.exe //C 'call C:\conda\Scripts\activate';
-    fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then
       hash -r;
       conda init bash;
       conda activate base;
       conda config --set always_yes yes --set changeps1 no
       conda update -q --all
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
+      wget https://repo.anaconda.com/pkgs/misc/conda-execs/conda-latest-win-64.exe -O conda.exe --no-check-certificate;
+      cmd.exe //C 'conda.exe create -y -q -p C:\conda conda conda-build=3.18.10 conda-verify python=3.7 -c conda-forge';
+      cmd.exe //C 'call C:\conda\Scripts\activate';
     fi
   - wget "https://github.com/FreeCAD/FreeCAD/releases/download/0.18/FreeCAD.0_18.Offline.Doc.7z"
   - 7z x FreeCAD.0_18.Offline.Doc.7z
