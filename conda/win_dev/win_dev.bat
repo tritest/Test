@@ -3,7 +3,7 @@ set copy_dir=FreeCAD_Conda_Build
 
 mkdir %copy_dir%
 
-call conda\win_dev\conda.exe create -p %conda_env% freecad calculix gitpython numpy matplotlib-base scipy sympy pandas six pyyaml opencamlib ifcopenshell freecad.asm3 libredwg pycollada --copy -c freecad/label/dev -c conda-forge -y
+conda\win_dev\conda.exe create -p %conda_env% freecad calculix gitpython numpy matplotlib-base scipy sympy pandas six pyyaml opencamlib ifcopenshell freecad.asm3 libredwg pycollada --copy -c freecad/label/dev -c conda-forge -y
 
 REM Copy Conda's Python and (U)CRT to FreeCAD/bin
 robocopy %conda_env%\DLLs %copy_dir%\bin\DLLs /S /MT:%NUMBER_OF_PROCESSORS%
