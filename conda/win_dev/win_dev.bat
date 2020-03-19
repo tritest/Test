@@ -1,2 +1,1 @@
-call "conda.exe create -p conda_env freecad calculix gitpython numpy matplotlib-base scipy sympy pandas six pyyaml opencamlib ifcopenshell freecad.asm3 libredwg pycollada --copy -c freecad/label/dev -c conda-forge -y"
-cmd.exe //C 'conda.exe create -p conda_env freecad calculix gitpython numpy matplotlib-base scipy sympy pandas six pyyaml opencamlib ifcopenshell freecad.asm3 libredwg pycollada --copy -c freecad/label/dev -c conda-forge -y'
+conda.exe create -p conda_env freecad calculix gitpython numpy matplotlib-base scipy sympy pandas six pyyaml opencamlib ifcopenshell freecad.asm3 libredwg pycollada --copy -c freecad/label/dev -c conda-forge -y
