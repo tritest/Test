@@ -82,6 +82,8 @@ script:
       cd ..;
       fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then
+      ls -R;
+      where conda;
       cd conda/win_dev;
       cmd.exe //C 'win_dev.bat';
       ls -R;
