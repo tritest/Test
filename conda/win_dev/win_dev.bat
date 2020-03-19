@@ -3,7 +3,7 @@ set copy_dir=FreeCAD_Conda_Build
 
 mkdir %copy_dir%
 
-call conda create ^
+call conda\win_dev\conda.exe create ^
     -p %conda_env% ^
     freecad calculix gitpython ^
     numpy matplotlib-base scipy sympy pandas six ^
